@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Alert Boxes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .alert-container {
+            position: relative;
+            padding: 10px;
+            font-size: 18px;
+            margin: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border-radius: 5px;
+            animation: slideIn 0.5s ease-out, fadeIn 0.5s ease-out 0.5s;
+        }
+        #alertBox1{
+            background-color: #f7ff05;
+            color: #000000;
+        }
+        #alertBox3{
+            background-color: #03f37f;
+            color: #000000;
+        }
+        #alertBox2{
+            background-color: #ff1b02;
+            color: #fff;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="alert-container" id="alertBox1">
+        <span class="close-btn" onclick="closeAlert('alertBox1')">×</span>
+        <p>This is the first alert box with animation!</p>
+    </div>
+
+    <div class="alert-container" id="alertBox2">
+        <span class="close-btn" onclick="closeAlert('alertBox2')">×</span>
+        <p>This is the second alert box with animation!</p>
+    </div>
+
+    <div class="alert-container" id="alertBox3">
+        <span class="close-btn" onclick="closeAlert('alertBox3')">×</span>
+        <p>This is the third alert box with animation!</p>
+    </div>
+
+    <script>
+        function closeAlert(alertId) {
+            var alertBox = document.getElementById(alertId);
+            alertBox.style.animation = "slideOut 0.5s ease-out, fadeOut 0.5s ease-out";
+
+            setTimeout(function () {
+                alertBox.style.display = "none";
+                showNextAlert();
+            }, 500);
+        }
+
+        function showNextAlert() {
+            var alertContainers = document.querySelectorAll('.alert-container:not([style*="display: none"])');
+            if (alertContainers.length > 0) {
+                alertContainers[0].style.animation = "slideIn 0.5s ease-out, fadeIn 0.5s ease-out 0.5s";
+            }
+        }
+
+        var styleSheet = document.styleSheets[0];
+        styleSheet.insertRule("@keyframes slideOut { from { transform: translateY(0); } to { transform: translateY(-100%); } }", styleSheet.cssRules.length);
+        styleSheet.insertRule("@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }", styleSheet.cssRules.length);
+    </script>
+
+</body>
+
+</html>
